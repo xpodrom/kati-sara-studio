@@ -20,7 +20,7 @@
   --serif:'Frank Ruhl Libre',serif; --sans:-apple-system, BlinkMacSystemFont, 'Heebo', system-ui, sans-serif;
 }
 *{box-sizing:border-box;margin:0}
-html{scroll-behavior:smooth;background:var(--bg)}
+html{scroll-behavior:smooth;background:var(--bg);overflow-x:hidden}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.65;overflow-x:hidden}
 ::selection{background:var(--gold);color:#120e08}
 #gl{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:0}
@@ -200,7 +200,7 @@ footer{position:relative;z-index:5;padding:30px 6vw 46px;display:flex;justify-co
 <div id="grain"></div>
 <div class="bar"></div><div class="bar b"></div>
 <div id="cut">סצנה <b>01</b> מתוך 05</div>
-<a id="island" href="tel:0538247102" aria-label="Kati Sara — קביעת תור"><img class="island-logo" src="legacy/logo.svg" alt="" width="30" height="30" onerror="this.style.display='none'" /><span>K·S</span> · <b>0538247102</b></a>
+<a id="island" href="tel:0538247102" aria-label="Kati Sara — קביעת תור"><img class="island-logo" src="legacy/logo.svg" alt="" width="34" height="34" onerror="this.style.display='none'" /><span>K·S</span> · <b>0538247102</b></a>
 <main>
   <section class="panel" id="s1">
     <div>
@@ -210,6 +210,7 @@ footer{position:relative;z-index:5;padding:30px 6vw 46px;display:flex;justify-co
         <a class="sicon wa" href="https://wa.me/972538247102?text=%D7%94%D7%99%D7%99%20%D7%A7%D7%98%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%AA%D7%95%D7%A8" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12 3.5a8.5 8.5 0 0 0-7.2 13L4 20.5l4.2-1.1A8.5 8.5 0 1 0 12 3.5z"/><path d="M9.3 8.8c.3-.6.7-.6 1-.6h.7c.3 0 .5.1.7.4l.9 2c.1.3.1.5-.1.7l-.6.7c-.2.2-.2.4-.1.6.5.9 1.6 1.9 2.5 2.3.3.1.5.1.7-.1l.7-.7c.2-.2.4-.2.7-.1l2 .9c.3.1.4.4.4.6 0 1.2-1 2.2-2.2 2.2-3.9-.3-6.1-2.4-7.6-5.1-.8-1.4-1.2-2.6-1-3.3z"/></svg></a>
       </div>
       <div class="kick rl">סטודיו לאיפור קבוע · אשקלון</div>
+      <img class="hero-logo" src="legacy/logo.svg" alt="" width="120" height="90" onerror="this.style.display='none'" style="display:block;width:clamp(96px,24vw,140px);height:auto;margin:14px auto 4px;opacity:.95;filter:drop-shadow(0 8px 30px rgba(210,171,85,.28))" />
       <h1 class="giant rl" style="margin-top:10px" dir="ltr">KATI <span class="r">SARA</span></h1>
       <p class="sub rl" style="transition-delay:.25s"><b>איפור קבוע · מיקרובלדינג גבות · למינציה לריסים · קעקוע קוסמטי.</b> סטודיו באשקלון שעובד לפי עקרון אחד: הפרצוף שלך הוא לא תרגיל — הוא הסרט, ואנחנו הצלמים.</p>
       <a class="cta" href="tel:0538247102">קביעת תור · <span style="font-weight:400">053-8247102</span></a>
@@ -507,7 +508,7 @@ gl_FragColor = vec4(c, 1.);
     });
     io.observe(el);
   });
-  [...document.querySelectorAll('.sub, .svc, .gal, .steps, .facts, .deep, .cta, .gbtn, .st')].forEach(el => {
+  [...document.querySelectorAll('.sub, .svc, .gal, .steps, .facts, .deep, .cta, .gbtn, .st, .hero-logo')].forEach(el => {
     el.style.opacity = 0; el.style.translate = '0 30px';
     el.style.transition = 'opacity .9s ease, translate .9s cubic-bezier(.2,.7,.2,1)';
     new IntersectionObserver((es) => {
@@ -540,6 +541,7 @@ gl_FragColor = vec4(c, 1.);
   }
   onScroll();
   tick();
+  setInterval(() => { if (scrollX !== 0) scrollTo({ left: 0, behavior: 'instant' }); }, 250);
 }
 </script>
 <script>
