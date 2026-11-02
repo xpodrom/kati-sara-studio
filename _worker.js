@@ -59,6 +59,12 @@ export default {
       return new Response('method not allowed', { status: 405 });
     }
 
+    if (url.pathname === '/api/status.json') {
+      return new Response(JSON.stringify({ schemaVersion: 1, label: 'Kati Sara', message: 'Live', color: 'brightgreen', cacheSeconds: 60 }), {
+        headers: { 'content-type': 'application/json;charset=utf-8', 'cache-control': 'max-age=60' },
+      });
+    }
+
     // GET /api/img/<key> - serve stored image bytes
     if (url.pathname.startsWith('/api/img/') && request.method === 'GET') {
       const key = url.pathname.replace('/api/img/', '');

@@ -1,0 +1,19 @@
+# Kati Sara — Permanent Makeup Studio, Ashkelon
+
+> Kati Sara is a permanent makeup studio in Ashkelon, Israel (Balfour 31).
+> Services: permanent makeup (eyeliner, lip powder method, eyebrow powder method),
+> lash lamination, classic/2D/3D/5D volume lash extensions, tattoo removal (laser/Removery),
+> professional makeup, bridal hair styling and makeup, deals and packages.
+
+## Site
+- [Home](https://kati-sara.pages.dev/): cinematic one-page site, Hebrew, RTL.
+- [Price list](https://kati-sara.pages.dev/): full official price table with from/to ranges (ILS).
+- [Admin](https://kati-sara.pages.dev/admin): password-protected content manager (owner only).
+- Machine-readable tile: `/sitemap.xml`, structured data embedded as JSON-LD (LocalBusiness).
+
+## Contact
+- Phone (appointments): +972 53 824 7102
+- WhatsApp: https://wa.me/972538247102
+- Instagram: https://www.instagram.com/kati_sara_beauty_artist/ · https://www.instagram.com/kati_sara_makeup_artist/
+- Facebook: https://www.facebook.com/share/1FMhsmJD55/
+- Navigation: Waze deep link to Balfour 31, Ashkelon
