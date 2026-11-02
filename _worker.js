@@ -81,7 +81,9 @@ export default {
       const body = await request.text();
       try {
         const obj = JSON.parse(body);
-        if (!obj.b64) return new Response('bad payload', { status: 400 });
+        if (!obj) return new Response('bad payload', { status: 400 });
+        // empty b64 = photo removal (admin delete button)
+        if (!obj.b64) { await env.PRICES_KV.delete('img_' + key); return new Response('ok'); }
         await env.PRICES_KV.put('img_' + key, JSON.stringify(obj));
         return new Response('ok');
       } catch (e) { return new Response('bad json', { status: 400 }); }
