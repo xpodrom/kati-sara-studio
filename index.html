@@ -43,6 +43,7 @@ main{position:relative;z-index:5}
 .hl{border-inline-start:1px solid var(--line);padding-inline-start:26px}
 .rl span{display:inline-block;opacity:0;translate:0 .35em;filter:blur(8px);transition:opacity .9s ease,translate .9s cubic-bezier(.2,.7,.2,1),filter .9s ease}
 .rl.in span{opacity:1;translate:0 0;filter:blur(0)}
+.rl .w{display:inline-block;white-space:nowrap}
 .kick{font-size:11px;letter-spacing:.55em;color:var(--gold);text-transform:uppercase;font-weight:300}
 h1,h2{font-family:var(--serif);font-weight:900}
 .giant{font-size:clamp(64px,15.5vw,200px);line-height:.9}
@@ -490,12 +491,20 @@ gl_FragColor = vec4(c, 1.);
     if (el.querySelector('*')) { io.observe(el); return; }
     const txt = el.textContent;
     el.textContent = '';
-    [...txt].forEach(ch => {
-      const s = document.createElement('span');
-      s.textContent = ch === ' ' ? '\u00A0' : ch;
-      el.appendChild(s);
+    let i = 0;
+    txt.split(/(\s+)/).forEach(word => {
+      if (!word) return;
+      if (/^\s+$/.test(word)) { el.appendChild(document.createTextNode(' ')); return; }
+      const w = document.createElement('span'); w.className = 'w';
+      [...word].forEach(ch => {
+        const s = document.createElement('span');
+        s.textContent = ch;
+        w.appendChild(s);
+      });
+      w.querySelectorAll('span').forEach((s) => s.style.transitionDelay = (i*22) + 'ms');
+      i += word.length;
+      el.appendChild(w);
     });
-    el.querySelectorAll('span').forEach((s, j) => s.style.transitionDelay = (j*22) + 'ms');
     io.observe(el);
   });
   [...document.querySelectorAll('.sub, .svc, .gal, .steps, .facts, .deep, .cta, .gbtn, .st')].forEach(el => {
