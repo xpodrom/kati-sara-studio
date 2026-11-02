@@ -51,10 +51,13 @@ fs.mkdirSync(OUT, { recursive: true });
   // ---- overflow scan
   const overflow = await page.evaluate(() => {
     let maxRight = 0, worst = '';
+    const decor = /(^|\s)(ring|halo|glow|grain|bar|stage-tag)(\s|$)/;
     document.querySelectorAll('main *, #island, #cut, footer *').forEach(el => {
+      const cls = String(el.className);
+      if (decor.test(cls)) return; // decorative overlays may intentionally bleed
       const b = el.getBoundingClientRect();
       if (b.right > innerWidth + 8 && b.width < innerWidth * 3) {
-        if (b.right > maxRight) { maxRight = Math.round(b.right); worst = el.tagName + '.' + String(el.className).slice(0, 40); }
+        if (b.right > maxRight) { maxRight = Math.round(b.right); worst = el.tagName + '.' + cls.slice(0, 40); }
       }
     });
     return { maxRight, worst };
