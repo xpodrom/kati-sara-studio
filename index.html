@@ -471,6 +471,22 @@ gl_FragColor = vec4(c, 1.);
   }));
   scene.add(particles);
 
+/* explicit firework cluster: bigger sparks, lower-left emphasis */
+const FW_N = IS_MOB ? 44 : 70;
+const fwp = new Float32Array(FW_N*3), fwr = new Float32Array(FW_N), fwa = new Float32Array(FW_N);
+for (let i = 0; i < FW_N; i++) {
+fwp[i*3] = -11.5 + Math.random()*9.5;
+fwp[i*3+1] = -9.5 + Math.random()*7.5;
+fwp[i*3+2] = (Math.random()-.5)*6;
+fwr[i] = 0.62 + Math.random()*0.38;
+fwa[i] = 2;
+}
+const fwg = new THREE.BufferGeometry();
+fwg.setAttribute('position', new THREE.BufferAttribute(fwp, 3));
+fwg.setAttribute('rnd', new THREE.BufferAttribute(fwr, 1));
+fwg.setAttribute('arcIdx', new THREE.BufferAttribute(fwa, 1));
+scene.add(new THREE.Points(fwg, particles.material));
+
   /* scroll = director */
     let scroll01 = 0;
   function onScroll(){
