@@ -1,0 +1,254 @@
+[
+ {
+  "name": "קו ריסים",
+  "from": null,
+  "to": null,
+  "fixed": "800"
+ },
+ {
+  "name": "איילינר עליון",
+  "from": null,
+  "to": null,
+  "fixed": null
+ },
+ {
+  "name": "איילינר והצללה",
+  "from": null,
+  "to": null,
+  "fixed": null
+ },
+ {
+  "name": "שפתיים בשיטת הפודרה",
+  "from": null,
+  "to": null,
+  "fixed": null
+ },
+ {
+  "name": "גבות בשיטת הפודרה",
+  "from": null,
+  "to": null,
+  "fixed": null
+ },
+ {
+  "name": "הסרת איפור קבוע בלייזר \\ ברמובר",
+  "from": null,
+  "to": null,
+  "fixed": "350"
+ },
+ {
+  "name": "נקודת חן",
+  "from": null,
+  "to": null,
+  "fixed": "250"
+ },
+ {
+  "name": "פתיחת מחט",
+  "from": null,
+  "to": null,
+  "fixed": "150"
+ },
+ {
+  "name": "הסרת קעקוע בלייזר \\ ברמובר",
+  "from": null,
+  "to": null,
+  "fixed": null
+ },
+ {
+  "name": "איפור ערב",
+  "from": null,
+  "to": null,
+  "fixed": "250"
+ },
+ {
+  "name": "איפור כלה",
+  "from": null,
+  "to": null,
+  "fixed": "800"
+ },
+ {
+  "name": "ציורי פנים",
+  "from": null,
+  "to": null,
+  "fixed": null
+ },
+ {
+  "name": "ציורי גוף",
+  "from": null,
+  "to": null,
+  "fixed": null
+ },
+ {
+  "name": "אפקטים",
+  "from": null,
+  "to": null,
+  "fixed": null
+ },
+ {
+  "name": "מסכות אישיות",
+  "from": null,
+  "to": null,
+  "fixed": null
+ },
+ {
+  "name": "סדנת איפור אישית",
+  "from": null,
+  "to": null,
+  "fixed": "300"
+ },
+ {
+  "name": "פן",
+  "from": null,
+  "to": null,
+  "fixed": null
+ },
+ {
+  "name": "מוברש",
+  "from": null,
+  "to": null,
+  "fixed": null
+ },
+ {
+  "name": "תלתלים",
+  "from": null,
+  "to": null,
+  "fixed": null
+ },
+ {
+  "name": "צמה",
+  "from": null,
+  "to": null,
+  "fixed": null
+ },
+ {
+  "name": "תסרוקת",
+  "from": null,
+  "to": null,
+  "fixed": null
+ },
+ {
+  "name": "תסרוקת כלה",
+  "from": null,
+  "to": null,
+  "fixed": "800"
+ },
+ {
+  "name": "תוספות שיער לתסרוקת",
+  "from": null,
+  "to": null,
+  "fixed": "150"
+ },
+ {
+  "name": "סדנת עיצוב שיער אישית",
+  "from": null,
+  "to": null,
+  "fixed": "300"
+ },
+ {
+  "name": "הרמת ריסים",
+  "from": null,
+  "to": null,
+  "fixed": "250"
+ },
+ {
+  "name": "הלחמת ריסים קלאסי",
+  "from": null,
+  "to": null,
+  "fixed": "270"
+ },
+ {
+  "name": "הלחמת ריסים 2D",
+  "from": null,
+  "to": null,
+  "fixed": "320"
+ },
+ {
+  "name": "הלחמת ריסים 3D",
+  "from": null,
+  "to": null,
+  "fixed": "340"
+ },
+ {
+  "name": "הלחמת ריסים ווליום 5D",
+  "from": null,
+  "to": null,
+  "fixed": "370"
+ },
+ {
+  "name": "הסרת הלחמת ריסים",
+  "from": null,
+  "to": null,
+  "fixed": "30"
+ },
+ {
+  "name": "צביעת ריסים",
+  "from": null,
+  "to": null,
+  "fixed": "30"
+ },
+ {
+  "name": "עיצוב גבות",
+  "from": null,
+  "to": null,
+  "fixed": "45"
+ },
+ {
+  "name": "הרמת גבות",
+  "from": null,
+  "to": null,
+  "fixed": "300"
+ },
+ {
+  "name": "צביעת גבות",
+  "from": null,
+  "to": null,
+  "fixed": "20"
+ },
+ {
+  "name": "שפם \\ מצח \\ סנטר תחתון \\ פאות \\ סנטר",
+  "from": null,
+  "to": null,
+  "fixed": "20"
+ },
+ {
+  "name": "ידיים",
+  "from": null,
+  "to": null,
+  "fixed": null
+ },
+ {
+  "name": "רגליים",
+  "from": null,
+  "to": null,
+  "fixed": null
+ },
+ {
+  "name": "בית שחי",
+  "from": null,
+  "to": null,
+  "fixed": null
+ },
+ {
+  "name": "גב \\ בטן \\ חזה",
+  "from": null,
+  "to": null,
+  "fixed": null
+ },
+ {
+  "name": "חבילת כלה מפנקת",
+  "from": null,
+  "to": null,
+  "fixed": "3000"
+ },
+ {
+  "name": "עיצוב וצביעת גבות",
+  "from": null,
+  "to": null,
+  "fixed": "60"
+ },
+ {
+  "name": "הסרת שיער בשעווה כל הפנים (לא כולל עיצוב גבות)",
+  "from": null,
+  "to": null,
+  "fixed": "70"
+ }
+]

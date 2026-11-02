@@ -1,0 +1,342 @@
+
+<!DOCTYPE html>
+<html lang="auto">
+<head>
+    <!--JS-->
+    <script type="text/javascript" src="./Translate/LanguageTranslate.js"></script>
+    <script type="text/javascript" src="./Data/JsonDb.js"></script>
+    <!--CSS-->
+    <link rel="stylesheet" href="./CallBtn.css">
+    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="./LanguageBtns.css">
+    <!--Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap" rel="stylesheet">
+    <!--Meta-->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<section>
+    <div class="HeadLogoSsection"></div>
+</section>
+<section>
+    <a class="CallA" href="tel:0538247102">
+        <img class="CallImg" src="./DocAndImg/phone.png" alt="Call" width="50" height="50">
+    </a>
+</section>
+<section dir="rtl" class="menu">
+    <div class="logoContainer">
+        <img src="./DocAndImg/logo.svg" class="logo" />
+    </div>
+    <section>
+        <div class="LangContainer">
+            <button class="button LangBtn ru-btn" value="Русский" type="button"  onclick="SetCulture(this)">
+                <button class="button LangBtn il-btn" value="עברית" type="button"  onclick="SetCulture(this)">
+                <button class="button LangBtn en-btn" value="English" type="button" onclick="SetCulture(this)">        
+        </div>
+        </section>
+    <h1 class="menu_restName"></h1>
+    <div class="menu_section menu_section_16421547819">
+        <h3 class="CanTranslated">איפור קבוע</h3>
+        <div class="menu_item menu_item_16421548063">
+            <h4 class="name CanTranslated">קו ריסים</h4>
+            <span class="price">800</span>
+            <hr>
+        </div>
+
+        <div class="menu_item menu_item_16421548878">
+            <h4 class="name CanTranslated">איילינר עליון</h4>
+            <span class="price"><span class="CanTranslated">מ</span> 1000 <span class="CanTranslated">עד</span> 1400</span>
+            <hr>
+        </div>
+
+        <div class="menu_item menu_item_16421549366">
+            <h4 class="name CanTranslated">איילינר והצללה</h4>
+            <span class="price"><span class="CanTranslated">מ</span> 1200 <span class="CanTranslated">עד</span> 1600</span>
+            <hr>
+        </div>
+
+        <div class="menu_item menu_item_16421549715">
+            <h4 class="name CanTranslated">שפתיים בשיטת הפודרה</h4>
+            <span class="price"><span class="CanTranslated">מ</span> 1000 <span class="CanTranslated">עד</span> 1400</span>
+            <hr>
+        </div>
+
+        <div class="menu_item menu_item_16421550047">
+            <h4 class="name CanTranslated">גבות בשיטת הפודרה</h4>
+            <span class="price"><span class="CanTranslated">מ</span> 1000 <span class="CanTranslated">עד</span> 1400</span>
+            <hr>
+        </div>
+
+        <div class="menu_item menu_item_16421550296">
+            <h4 class="name CanTranslated">הסרת איפור קבוע בלייזר \ ברמובר</h4>
+            <span class="price">350</span>
+            <hr>
+        </div>
+
+        <div class="menu_item menu_item_16421550799">
+            <h4 class="name CanTranslated">נקודת חן</h4>
+            <span class="price">250</span>
+            <hr>
+        </div>
+    </div>
+    <div class="menu_section menu_section_16421559240">
+        <h3 class="CanTranslated">קעקועים</h3>
+        <div class="menu_item menu_item_16421555088">
+            <h4 class="name CanTranslated">פתיחת מחט</h4>
+            <span class="price">150</span>
+            <hr>
+        </div>
+        <div class="menu_item menu_item_16421555088">
+            <h4 class="name CanTranslated">הסרת קעקוע בלייזר \ ברמובר</h4>
+            <span class="price"><span class="CanTranslated">מ</span> 250 <span class="CanTranslated">עד</span> 750</span>
+            <hr>
+        </div>
+    </div>   
+    <div class="menu_section menu_section_16421554750">
+        <h3 class="CanTranslated">איפור מקצועי</h3>
+
+        <div class="menu_item menu_item_16421555088">
+            <h4 class="name CanTranslated">איפור ערב</h4>
+            <span class="price">250</span>
+            <hr>
+        </div>
+
+        <div class="menu_item menu_item_16421555319">
+            <h4 class="name CanTranslated">איפור כלה</h4>
+            <span class="price">800</span>
+            <hr>
+        </div>
+
+        <div class="menu_item menu_item_16421555540">
+            <h4 class="name CanTranslated">ציורי פנים</h4>
+            <span class="price"> <span class="CanTranslated">מ</span> 50 <span class="CanTranslated">עד</span> 500</span>
+            <hr>
+        </div>
+
+        <div class="menu_item menu_item_16421555730">
+            <h4 class="name CanTranslated">ציורי גוף</h4>
+            <span class="price"><span class="CanTranslated">מ</span> 500 <span class="CanTranslated">עד</span> 2000</span>
+            <hr>
+        </div>
+
+        <div class="menu_item menu_item_16421555954">
+            <h4 class="name CanTranslated">אפקטים</h4>
+            <span class="price"><span class="CanTranslated">מ</span> 100 <span class="CanTranslated">עד</span> 500</span>
+            <hr>
+        </div>
+
+        <div class="menu_item menu_item_16421556343">
+            <h4 class="name CanTranslated">מסכות אישיות</h4>
+            <span class="price"><span class="CanTranslated">מ</span> 300 <span class="CanTranslated">עד</span> 800</span>
+            <hr>
+        </div>
+
+        <div class="menu_item menu_item_16421558934">
+            <h4 class="name CanTranslated">סדנת איפור אישית</h4>
+            <span class="price">300</span>
+            <hr>
+        </div>
+    </div>
+    <div class="menu_section menu_section_16421557012">
+        <h3 class="CanTranslated">עיצוב שיער</h3>
+        <div class="menu_item menu_item_16421557122">
+            <h4 class="name CanTranslated">פן</h4>
+            <span class="price"><span class="CanTranslated">מ</span> 50 <span class="CanTranslated">עד</span> 100</span>
+            <hr>
+        </div>
+
+        <div class="menu_item menu_item_16421557257">
+            <h4 class="name CanTranslated">מוברש</h4>
+            <span class="price"><span class="CanTranslated">מ</span> 200 <span class="CanTranslated">עד</span> 300</span>
+            <hr>
+        </div>
+
+        <div class="menu_item menu_item_16421557415">
+            <h4 class="name CanTranslated">תלתלים</h4>
+            <span class="price"><span class="CanTranslated">מ</span> 200 <span class="CanTranslated">עד</span> 300</span>
+            <hr>
+        </div>
+
+        <div class="menu_item menu_item_16421557599">
+            <h4 class="name CanTranslated">צמה</h4>
+            <span class="price"><span class="CanTranslated">מ</span> 30 <span class="CanTranslated">עד</span> 100</span>
+            <hr>
+        </div>
+
+        <div class="menu_item menu_item_16421557755">
+            <h4 class="name CanTranslated">תסרוקת</h4>
+            <span class="price"><span class="CanTranslated">מ</span> 200 <span class="CanTranslated">עד</span> 500</span>
+            <hr>
+        </div>
+
+        <div class="menu_item menu_item_16421558064">
+            <h4 class="name CanTranslated">תסרוקת כלה</h4>
+            <span class="price">800</span>
+            <hr>
+        </div>
+
+        <div class="menu_item menu_item_16421558365">
+            <h4 class="name CanTranslated">תוספות שיער לתסרוקת</h4>
+            <span class="price">150</span>
+            <hr>
+        </div>
+
+        <div class="menu_item menu_item_16421558601">
+            <h4 class="name CanTranslated">סדנת עיצוב שיער אישית</h4>
+            <span class="price">300</span>
+            <hr>
+        </div>
+    </div>
+    <div class="menu_section menu_section_16421560063">
+        <h3 class="CanTranslated">ריסים</h3>
+
+        <div class="menu_item menu_item_16421560346">
+            <h4 class="name CanTranslated">הרמת ריסים</h4>
+            <span class="price">250</span>
+            <hr>
+        </div>
+
+        <div class="menu_item menu_item_16421560346">
+            <h4 class="name CanTranslated">הלחמת ריסים קלאסי</h4>
+            <span class="price">270</span>
+            <hr>
+        </div>
+
+        <div class="menu_item menu_item_16421560531">
+            <h4 class="name CanTranslated">הלחמת ריסים 2D</h4>
+            <span class="price">320</span>
+            <hr>
+        </div>
+
+        <div class="menu_item menu_item_16421560531">
+            <h4 class="name CanTranslated">הלחמת ריסים 3D</h4>
+            <span class="price">340</span>
+            <hr>
+        </div>
+
+        <div class="menu_item menu_item_16421560856 showPreview">
+            <h4 class="name CanTranslated">הלחמת ריסים ווליום 5D</h4>
+            <span class="price">370</span>
+            <hr>
+        </div>
+        <div class="menu_item menu_item_16471561507 showPreview">
+            <h4 class="name CanTranslated">הסרת הלחמת ריסים</h4>
+            <span class="price">30</span>
+            <hr>
+        </div>
+
+        <div class="menu_item menu_item_16421561507 showPreview">
+            <h4 class="name CanTranslated">צביעת ריסים</h4>
+            <span class="price">30</span>
+            <hr>
+        </div>
+    </div>
+    <div class="menu_section menu_section_16421559240">
+    <h3 class="CanTranslated">עיצוב גבות</h3>
+    <div class="menu_item menu_item_16421561825">
+        <h4 class="name CanTranslated">עיצוב גבות</h4>
+        <span class="price">45</span>
+        <hr>
+    </div>
+
+    <div class="menu_item menu_item_16421561507 showPreview">
+        <h4 class="name CanTranslated">הרמת גבות</h4>
+        <span class="price">300</span>
+        <hr>
+    </div>
+
+    <div class="menu_item menu_item_16421561977">
+        <h4 class="name CanTranslated">צביעת גבות</h4>
+        <span class="price">20</span>
+        <hr>
+    </div>
+</div>
+<div class="menu_section menu_section_16421559240">
+    <h3 class="CanTranslated">הסרת שיער בשעווה</h3>
+
+    <div class="menu_item menu_item_16421562132">
+        <h4 class="name CanTranslated">שפם \ מצח \ סנטר תחתון \ פאות \ סנטר</h4>
+        <span class="price">20</span>
+        <hr>
+    </div>
+    <div class="menu_item menu_item_16421563686">
+        <h4 class="name CanTranslated">ידיים</h4>
+        <span class="price"><span class="CanTranslated">מ</span> 50 <span class="CanTranslated">עד</span> 100</span>
+        <hr>
+    </div>
+    <div class="menu_item menu_item_16421564088">
+        <h4 class="name CanTranslated">רגליים</h4>
+        <span class="price"><span class="CanTranslated">מ</span> 50 <span class="CanTranslated">עד</span> 100</span>
+        <hr>
+    </div>
+    <div class="menu_item menu_item_16421564267">
+        <h4 class="name CanTranslated">בית שחי</h4>
+        <span class="price"><span class="CanTranslated">מ</span> 50 <span class="CanTranslated">עד</span> 70</span>
+        <hr>
+    </div>
+    <div class="menu_item menu_item_16421564661">
+        <h4 class="name CanTranslated">גב \ בטן \ חזה</h4>
+        <span class="price"><span class="CanTranslated">מ</span> 50 <span class="CanTranslated">עד</span> 200</span>
+        <hr>
+    </div>   
+</div>
+    <div class="menu_section menu_section_16421559240">
+    <h3 class="CanTranslated">מבצעים וחבילות</h3>
+    <div class="menu_item menu_item_16421559416">
+        <h4 class="name CanTranslated">חבילת כלה מפנקת</h4>
+        <span class="price">3000</span>
+        <hr>
+    </div>
+    <div class="menu_item menu_item_16421562260 showPreview">
+        <h4 class="name CanTranslated">עיצוב וצביעת גבות</h4>
+        <span class="price">60</span>
+        <hr>
+    </div>
+    
+    <div class="menu_item menu_item_16421563410">
+        <h4 class="name CanTranslated">הסרת שיער בשעווה כל הפנים (לא כולל עיצוב גבות)</h4>
+        <span class="price">70</span>
+        <hr>
+    </div>
+
+    <div class="menu_item menu_item_16421563410">
+        <h4 class="name CanTranslated">הסרת איפור קבוע \ קעקוע בלייזר <br> חבילה ל10 טיפולים והתחייבות להסרה מלאה</h4>
+        <span class="price">3000</span>
+        <hr>
+    </div>
+
+    <div class="menu_item menu_item_16421563410">
+        <h4 class="name CanTranslated">הסרת איפור קבוע \ קעקוע ברמובר <br> חבילה ל10 טיפולים והתחייבות להסרה מלאה</h4>
+        <span class="price">3000</span>
+        <hr>
+    </div>
+</div>
+
+</div>
+    <hr>
+    <div class="additionalTermsSection CanTranslated">
+        <div class="AdditionalTerm">
+            <p class="SimpleStar">*</p>
+            <p style="font-size: 10px;" class="additionalTermsDescription CanTranslated">המחירים לטיפולי איפור קבוע הם לטיפול אחד בלבד ובמידת הצורך ניתן לקבל טיפול שני להדגשה עד חודשיים מהטיפול הראשון על פי שיקול דעת בעלת העסק</p>    
+        </div>
+        <div class="AdditionalTerm">
+            <p class="SimpleStar">*</p>
+            <p style="font-size: 10px;" class="additionalTermsDescription CanTranslated">כל המחירים ניתנים לשינוי על ידי בעלת העסק על פי שיקול דעתה בכל עת</p>
+        </div>
+        <div class="AdditionalTerm">
+            <p class="SimpleStar">*</p>
+            <p style="font-size: 10px;" class="additionalTermsDescription CanTranslated">בשרותי איפור מקצועי ועיצוב שיער המחיר אינו כולל הגעה לבית הלקוח</p>
+        </div>
+        <div class="AdditionalTerm">
+            <p class="SimpleStar">*</p>
+            <p style="font-size: 10px;" class="additionalTermsDescription CanTranslated">ברכישת חבילת הסרה בלייזר או ברמובר בעלת העסק תוכל לשלב את 2 שיטות הטיפול על פי שיקול דעתה המקצועית</p>
+        </div>
+    </div>
+</section>
+</body>
+</html>
