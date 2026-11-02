@@ -585,6 +585,70 @@ return `<div class="pcat"><h3>${(g.category || '').replace(/</g, '&lt;')}</h3>${
 }).join('');
 } catch (e) { /* fallback: the embedded price list stays */ }
 })();
+/* ---- full content from admin (texts, services, frames, journey, phone) ---- */
+(async () => {
+let d;
+try { d = await (await fetch('/api/content')).json(); } catch (e) { return; }
+if (!d || typeof d !== 'object') return;
+const T = d.texts || {};
+const esc = s => String(s == null ? '' : s).replace(/</g, '&lt;').replace(/>/g, '&gt;');
+function set(sel, html, attr){
+const el = document.querySelector(sel);
+if (!el) return;
+if (attr) el[attr] = html; else el.innerHTML = html;
+}
+try {
+if (T.hero_kicker) set('#s1 .kick', esc(T.hero_kicker));
+if (T.hero_sub_bold || T.hero_sub_rest) set('#s1 .sub', '<b>' + esc(T.hero_sub_bold || '') + '</b>' + esc(T.hero_sub_rest || ''));
+if (T.work_kicker) set('#s2 .kick', esc(T.work_kicker));
+if (T.work_title) set('#s2 h2', esc(T.work_title).replace(/\\n/g, '<br>'));
+if (T.frames_kicker) set('#s3 .kick', esc(T.frames_kicker));
+if (T.frames_sub) set('#s3 .sub', esc(T.frames_sub));
+if (T.prices_kicker) set('#prc .kick', esc(T.prices_kicker));
+if (T.prices_sub) set('#prc .sub', esc(T.prices_sub));
+if (T.journey_kicker) set('#s4 .kick', esc(T.journey_kicker));
+if (T.journey_sub) set('#s4 .sub', esc(T.journey_sub));
+if (T.final_kicker) set('#s5 .kick', esc(T.final_kicker));
+if (T.final_title) set('#s5 h2', esc(T.final_title));
+if (T.final_ord) set('#s5 .ord', esc(T.final_ord));
+if (T.address) set('address', esc(T.address));
+if (T.waze_label) set('.wbtn span', esc(T.waze_label));
+if (T.footer_left) set('footer div:first-child', esc(T.footer_left));
+if (T.footer_right) set('footer div:last-child', esc(T.footer_right));
+} catch (e) {}
+try {
+if (Array.isArray(d.services) && d.services.length) {
+const svc = document.querySelector('.svc');
+if (svc) svc.innerHTML = d.services.map((s, i) =>
+`<a class="srow" href="tel:${T.phone || '0538247102'}"><span class="snum">0${i + 1}</span><span class="sname">${esc(s.name)}</span><span class="sdesc">${esc(s.desc)}</span></a>`).join('');
+}
+} catch (e) {}
+try {
+const caps = document.querySelectorAll('#s3 .frame .cap');
+(d.frames || []).forEach((f, i) => {
+if (caps[i] && f.cap) caps[i].textContent = f.cap;
+});
+(d.frames || []).forEach((f, i) => {
+const fr = document.querySelectorAll('#s3 .frame')[i]; if (!fr) return;
+if (f.img) fr.style.backgroundImage = `url('/api/img/${encodeURIComponent(f.img)}')`;
+});
+} catch (e) {}
+try {
+const steps = document.querySelectorAll('.steps .st');
+(d.journey || []).forEach((j, i) => {
+const st = steps[i]; if (!st) return;
+const num = st.querySelector('i'); if (num && j.num) num.textContent = esc(j.num);
+const h = st.querySelector('h3'); if (h && j.title) h.textContent = esc(j.title);
+const p = st.querySelector('p'); if (p && j.desc) p.textContent = esc(j.desc);
+});
+} catch (e) {}
+try {
+const list = document.querySelector('.pnotes ul');
+if (list && Array.isArray(d.disclaimers) && d.disclaimers.length) {
+list.innerHTML = d.disclaimers.map(x => `<li>${esc(x)}</li>`).join('');
+}
+} catch (e) {}
+})();
 </script>
 <noscript><style>#gl,#grain{display:none} body{background:radial-gradient(120% 100% at 68% 18%, #33281a 0%, #0e0b09 70%)}</style></noscript>
 </body>
