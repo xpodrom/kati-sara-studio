@@ -181,6 +181,7 @@ footer{position:relative;z-index:5;padding:30px 6vw 46px;display:flex;justify-co
 .wbtn:hover{background:linear-gradient(135deg, rgba(210,171,85,.3), rgba(210,171,85,.12));transform:translateY(-2px)}
 @media(max-width:680px){
 footer{padding-bottom:calc(46px + 74px)}
+.panel{padding-bottom:120px}
 .ring{inset:-2%}
 .ring.r2{inset:-5%}
 .gal{grid-template-columns:1fr 1fr}
@@ -364,7 +365,7 @@ if (!renderer) {
           vec3 silkC  = vec3(.095,.062,.05) + vec3(.21,.12,.07)*f + vec3(.08,.045,.02)*pow(f,3.);
           vec2 lp = vec2(.62,.58) + (uMouse-.5)*.16;
           float d = distance(uv*vec2(uRes.x/uRes.y,1.), lp*vec2(uRes.x/uRes.y,1.));
-          vec3 spot = vec3(.0504,.042,.04) + vec3(.5,.44,.30)*pow(max(0., 1.-d*1.15), 2.4)*.42;
+          vec3 spot = vec3(.038,.032,.03) + vec3(.36,.31,.21)*pow(max(0., 1.-d*1.15), 2.4)*.38;
           vec3 dust = vec3(.05,.042,.034) + vec3(.16,.12,.06)*pow(f,2.2);
           vec3 col = velvet;
           col = mix(col, silkC, smoothstep(0.,1., min(uPhase,1.)) * smoothstep(2., 1.5, uPhase));
@@ -452,7 +453,7 @@ gl_FragColor = vec4(c, 1.);
         p.x += uMouse.x * 1.2; p.y += uMouse.y * .9;
         vec4 mv = modelViewMatrix * vec4(p, 1.0);
         gl_Position = projectionMatrix * mv;
-        gl_PointSize = (1.7 + rnd*3.2) * (30.0 / -mv.z) * (1.0 + uScroll*1.8);
+        gl_PointSize = (2.4 + rnd*4.4) * (34.0 / -mv.z) * (1.0 + uScroll*2.0);
         vR = rnd;
       }`,
     fragmentShader:`
@@ -461,7 +462,7 @@ gl_FragColor = vec4(c, 1.);
       void main(){
         vec2 dd = gl_PointCoord - .5;
         float tw = 0.72 + 0.28*sin(uT*2.6 + vR*43.7);
-        float a = smoothstep(.5, 0., length(dd)) * (0.52 + vR*0.5) * tw;
+        float a = smoothstep(.42, 0., length(dd)) * (0.62 + vR*0.4) * tw;
         vec3 gold = vec3(1.0, 0.9, 0.55);
         vec3 rose = vec3(0.85, 0.55, 0.45);
         gl_FragColor = vec4(mix(gold, rose, smoothstep(.55,.95,vR)), a);
