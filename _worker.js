@@ -60,7 +60,7 @@ export default {
     }
 
     // GET /api/img/<key> - serve stored image bytes
-    if (url.pathname.startsWith('/api/img/')) {
+    if (url.pathname.startsWith('/api/img/') && request.method === 'GET') {
       const key = url.pathname.replace('/api/img/', '');
       if (!key) return new Response('bad request', { status: 400 });
       let data = null;
