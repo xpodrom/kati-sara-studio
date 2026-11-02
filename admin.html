@@ -36,7 +36,6 @@ button{cursor:pointer;border:0;border-radius:10px;padding:9px 18px;font-size:14p
 .msg.show{opacity:1}
 .msg.err{background:#e28a8a;color:#210a04}
 .thumb{max-width:130px;max-height:130px;border-radius:12px;border:1px solid var(--line);display:block;margin-bottom:6px}
-.hint{color:var(--soft);font-size:12px}
 @media(max-width:560px){.row3{grid-template-columns:1fr 66px 66px 28px}}
 </style>
 </head>
@@ -53,24 +52,33 @@ button{cursor:pointer;border:0;border-radius:10px;padding:9px 18px;font-size:14p
 
 <div id="editor" style="display:none">
 <div class="tabs" id="tabs">
-<button class="tab on" data-t="texts">📝 טקסטים</button>
+<button class="tab on" data-t="biz">🏢 הגדרות עסק</button>
+<button class="tab" data-t="texts">📝 טקסטים</button>
 <button class="tab" data-t="services">📋 שירותים</button>
 <button class="tab" data-t="frames">🎞️ פריימים + תמונות</button>
 <button class="tab" data-t="journey">🛤️ הדרך שלנו</button>
 <button class="tab" data-t="prices">💰 מחירון</button>
 </div>
 
-<div class="panel on" id="p_texts">
+<div class="panel on" id="p_biz">
+<label>טלפון — מוחל בכל מקום באתר (כפתורים, tel:, איילנד)</label><input id="b_phone" style="direction:ltr" placeholder="0538247102">
+<label>וואטסאפ — טקסס פתיחה</label><textarea id="b_wa_text"></textarea>
+<label>אינסטגרם 1 — כתובת מלאה</label><input id="b_ig1" style="direction:ltr">
+<label>אינסטגרם 2 — כתובת מלאה (ריק = להסתיר)</label><input id="b_ig2" style="direction:ltr">
+<label>פייסבוק — כתובת מלאה (ריק = להסתיר)</label><input id="b_fb" style="direction:ltr">
+<label>Waze — קישור מלא (כולל קואורדינטות & navigate=yes)</label><input id="b_waze" style="direction:ltr">
+<label>טקסט Waze</label><input id="b_waze_label">
+</div>
+
+<div class="panel" id="p_texts">
 <label>פתיח עמוד ראשי — kicker</label><input id="t_hero_kicker">
 <label>פתיח עמוד ראשי — חלק מודגש</label><textarea id="t_hero_sub_bold"></textarea>
 <label>פתיח עמוד ראשי — שאר הטקסט</label><textarea id="t_hero_sub_rest"></textarea>
 <label>Kicker — העבודה שלך</label><input id="t_work_kicker">
-<label>כותרת ראשית של מחסן העבודות</label><textarea id="t_work_title"></textarea>
+<label>כותרת ראשית של מסך העבודות</label><textarea id="t_work_title"></textarea>
 <label>Kicker — המחירון</label><input id="t_prices_kicker">
 <label>מחירון — תיאור</label><textarea id="t_prices_sub"></textarea>
 <label>כתובת (מתחת לכפתור)</label><input id="t_address">
-<label>טקסט Waze</label><input id="t_waze_label">
-<label>טלפון</label><input id="t_phone">
 <label>Footer שמאל</label><input id="t_footer_left">
 <label>Footer ימין</label><input id="t_footer_right">
 <label>Kicker — סיום</label><input id="t_final_kicker">
@@ -99,7 +107,7 @@ button{cursor:pointer;border:0;border-radius:10px;padding:9px 18px;font-size:14p
 <div class="panel" id="p_prices">
 <div id="prices"></div>
 <button class="add" onclick="prAddCat()">+ קטגוריה חדשה</button>
-<label style="margin-top:18px">הערות שמוצגות במחירון (חוקי משתנה)</label>
+<label style="margin-top:18px">הערות שמוצגות במחירון</label>
 <div id="disc"></div>
 <button class="add" onclick="dAdd()">+ הערה חדשה</button>
 </div>
@@ -113,7 +121,7 @@ button{cursor:pointer;border:0;border-radius:10px;padding:9px 18px;font-size:14p
 <div class="msg" id="msg"></div>
 
 <script>
-let C = { groups: [], texts: {}, services: [], frames: [], journey: [], disclaimers: [] };
+let C = { groups: [], texts: {}, biz: {}, services: [], frames: [], journey: [], disclaimers: [] };
 let pass = sessionStorage.getItem('ks_pass') || '';
 
 const DEFSVC = [
@@ -128,7 +136,6 @@ const DEFJR = [
   { num: '03', title: 'הטיפול', desc: 'הרדמה מקומית, כלים סטריליים חד-פעמיים, מהלך שקט ומבוקר.' },
   { num: '04', title: 'מעקב', desc: 'טיפול שני לפי הצורך, ריפיל שנה, והנחיות בית.' }
 ];
-const DEFJR_SUB = 'סגנון, גוון, ציפיות ותוצאה צפויה — לפני שמתחילים כלים.';
 const DEFCAP = ['גבות פודרה · לפני / אחרי', 'למינציה · פריים חי', 'איפור קבוע · שפתיים', 'קעקוע קוסמטי', 'מבט כללי', 'פריים שישי'];
 const DEFDISC = [
   'המחירים לטיפולי איפור קבוע הם לטיפול אחד בלבד, ובמידת הצורך ניתן לקבל טיפול שני להדגשה עד חודשיים מהטיפול הראשון.',
@@ -136,6 +143,15 @@ const DEFDISC = [
   'בשירותי איפור מקצועי ועיצוב שיער המחיר אינו כולל הגעה לבית הלקוח.',
   'ברכישת חבילת הסרה בלייזר או ברמובר בעלת העסק תוכל לשלב את שתי שיטות הטיפול עפ שיקול דעתה המקצועי.'
 ];
+const DEFBIZ = {
+  phone: '0538247102',
+  wa_text: 'שלום, אני מעוניין בפרטים על טיפול...',
+  ig1: 'https://www.instagram.com/kati_sara_beauty_artist/',
+  ig2: 'https://www.instagram.com/kati_sara_makeup_artist/',
+  fb: 'https://www.facebook.com/share/1FMhsmJD55/',
+  waze: 'https://waze.com/ul?ll=31.6903642%2C34.5783461&navigate=yes&zoom=17',
+  waze_label: 'ניווט לסטודיו ב-Waze'
+};
 const DEFAULTS_TEXTS = {
   hero_kicker: 'סטודיו לאיפור קבוע · אשקלון',
   hero_sub_bold: 'איפור קבוע · גבות ושפתיים בשיטת הפודרה · למינציה לריסים · הסרת איפור קבוע.',
@@ -145,8 +161,6 @@ const DEFAULTS_TEXTS = {
   prices_kicker: 'המחירון',
   prices_sub: 'הרשימה המלאה כפי שמופיעה בסטודיו — מחירי התחלה ("מ-"), והרבה טיפולים בטווח לפי מורכבות ואורך שיער. המחיר הסופי נקבע תמיד בשיחה לפני הטיפול, ובלי הפתעות במכשיר.',
   address: 'בלפור 31, אשקלון · קבלת פניות בטלפון',
-  waze_label: 'ניווט לסטודיו ב-Waze',
-  phone: '0538247102',
   footer_right: 'הופק בסטודיו K·S · אשקלון',
   footer_left: '© 2026 KATI SARA — אשקלון',
   final_kicker: 'מחכים לך',
@@ -155,7 +169,7 @@ const DEFAULTS_TEXTS = {
   frames_sub: 'כל פריים יהיה עבודה אמיתית מהסטודיו — לפני ואחרי, בלי פילטרים שממציאים תוצאות. המקומות כבר מוכנים.',
   frames_kicker: 'הפריימים שלנו',
   journey_kicker: 'הדרך שלנו',
-  journey_sub: DEFJR_SUB
+  journey_sub: 'סגנון, גוון, ציפיות ותוצאה צפויה — לפני שמתחילים כלים.'
 };
 
 function toast(m, err){
@@ -178,11 +192,11 @@ async function load(){
 const d = await (await fetch('/api/content')).json();
 C = Object.assign({}, d || {});
 C.texts = Object.assign({}, DEFAULTS_TEXTS, d.texts || {});
+delete C.texts.phone;
+C.biz = Object.assign({}, DEFBIZ, d.biz || {});
+if ((d.texts || {}).phone && !(d.biz || {}).phone) C.biz.phone = d.texts.phone; // legacy migrate
 C.groups = Array.isArray(d.groups) && d.groups.length ? d.groups : [];
-if (!C.groups.length) {
-  try { C.groups = (await (await fetch('/api/prices')).json()).groups || []; } catch (e) {}
-}
-if (!C.groups.length) try { C.groups = (JSON.parse(localStorage.getItem('ks_seed') || 'null') || []) } catch (e) { C.groups = [] }
+if (!C.groups.length) { try { C.groups = (await (await fetch('/api/prices')).json()).groups || []; } catch (e) {} }
 C.services = Array.isArray(d.services) && d.services.length ? d.services : DEFSVC.slice();
 C.journey = Array.isArray(d.journey) && d.journey.length ? d.journey : DEFJR.slice();
 C.disclaimers = Array.isArray(d.disclaimers) && d.disclaimers.length ? d.disclaimers : DEFDISC.slice();
@@ -196,15 +210,21 @@ for (const [k, v] of Object.entries(attrs)) e[k] = v;
 children.forEach(c => e.appendChild(c));
 return e;
 };
-const inp = (value, oninput, cls = '') => { const i = document.createElement('input'); i.value = value == null ? '' : value; i.className = cls; i.addEventListener('input', oninput); return i; };
+const inp = (value, oninput) => { const i = document.createElement('input'); i.value = value == null ? '' : value; i.addEventListener('input', oninput); return i; };
 const ta_ = (value, oninput, rows = 2) => { const i = document.createElement('textarea'); i.value = value == null ? '' : value; i.rows = rows; i.addEventListener('input', oninput); return i; };
-const lbl = (t, m = 'margin:0') => el('span', { textContent: t, className: 'label', style: m });
+const lbl = (t) => el('span', { textContent: t, className: 'label' });
 
 function render(){
+// biz
+[['b_phone','phone'],['b_wa_text','wa_text'],['b_ig1','ig1'],['b_ig2','ig2'],['b_fb','fb'],['b_waze','waze'],['b_waze_label','waze_label']].forEach(([id, k]) => {
+  const e = document.getElementById(id);
+  e.value = C.biz[k] || '';
+  e.oninput = ev => C.biz[k] = ev.target.value;
+});
 // texts
 const map = { t_hero_kicker:'hero_kicker', t_hero_sub_bold:'hero_sub_bold', t_hero_sub_rest:'hero_sub_rest',
  t_work_kicker:'work_kicker', t_work_title:'work_title', t_prices_kicker:'prices_kicker', t_prices_sub:'prices_sub',
- t_address:'address', t_waze_label:'waze_label', t_phone:'phone', t_footer_left:'footer_left', t_footer_right:'footer_right',
+ t_address:'address', t_footer_left:'footer_left', t_footer_right:'footer_right',
  t_final_kicker:'final_kicker', t_final_title:'final_title', t_frames_sub:'frames_sub', t_frames_kicker:'frames_kicker',
  t_journey_kicker:'journey_kicker', t_journey_sub:'journey_sub' };
 Object.entries(map).forEach(([id, key]) => {
@@ -212,26 +232,24 @@ Object.entries(map).forEach(([id, key]) => {
   e.value = C.texts[key] || '';
   e.oninput = ev => C.texts[key] = ev.target.value;
 });
-
 // services
 const sw = document.getElementById('services'); sw.innerHTML = '';
 C.services.forEach((s, i) => {
   const card = el('div', { className: 'card' });
   card.appendChild(el('h4', {}, [el('span', { textContent: 'שירות ' + (i + 1) }),
     (() => { const b = el('button', { textContent: '×', className: 'del' }); b.onclick = () => { C.services.splice(i, 1); render(); }; return b; })()]));
-  card.appendChild(lbl('שם השירות', 'margin:6px 0 4px'));
+  card.appendChild(lbl('שם השירות'));
   card.appendChild(inp(s.name, e => s.name = e.target.value));
-  card.appendChild(lbl('תיאור קצר שיוצג באתר', 'margin:8px 0 4px'));
+  card.appendChild(lbl('תיאור קצר שיוצג באתר'));
   card.appendChild(inp(s.desc, e => s.desc = e.target.value));
   sw.appendChild(card);
 });
-
 // frames
 const fw = document.getElementById('frames'); fw.innerHTML = '';
 C.frames.forEach((f, i) => {
   const card = el('div', { className: 'card' });
   card.appendChild(el('h4', {}, [el('span', { textContent: 'פריים ' + (i + 1) }), (() => { const b = el('button', { textContent: '×', className: 'del' }); b.onclick = () => { C.frames.splice(i, 1); render(); }; return b; })()]));
-  card.appendChild(lbl('כיתוב שיוצג על הפריים', 'margin:6px 0 4px'));
+  card.appendChild(lbl('כיתוב שיוצג על הפריים'));
   card.appendChild(inp(f.cap, e => f.cap = e.target.value));
   if (f.img) {
     const img = document.createElement('img');
@@ -240,7 +258,7 @@ C.frames.forEach((f, i) => {
     img.onerror = () => img.remove();
     card.appendChild(img);
   }
-  card.appendChild(lbl('העלאת תמונה (JPG·PNG): ', 'margin:6px 0 4px'));
+  card.appendChild(lbl('העלאת תמונה (JPG·PNG): '));
   const file = document.createElement('input');
   file.type = 'file'; file.accept = 'image/*';
   file.onchange = ev => uploadFrame(i, ev.target.files[0]);
@@ -250,7 +268,6 @@ C.frames.forEach((f, i) => {
   card.appendChild(rm);
   fw.appendChild(card);
 });
-
 // journey
 const jw = document.getElementById('journey'); jw.innerHTML = '';
 C.journey.forEach((j, i) => {
@@ -263,7 +280,6 @@ C.journey.forEach((j, i) => {
   card.appendChild(ta_(j.desc, e => j.desc = e.target.value));
   jw.appendChild(card);
 });
-
 // prices
 const pw = document.getElementById('prices'); pw.innerHTML = '';
 C.groups.forEach((g, gi) => {
@@ -290,7 +306,6 @@ C.groups.forEach((g, gi) => {
   card.appendChild(add);
   pw.appendChild(card);
 });
-
 // disclaimers
 const dw = document.getElementById('disc'); dw.innerHTML = '';
 C.disclaimers.forEach((d, i) => {
@@ -347,6 +362,7 @@ items: (g.items || [])
 from: it.from === '' ? null : Number(it.from),
 ...(it.to ? { to: Number(it.to) } : {}) }))
 }));
+delete (C.texts || {}).phone;
 const payload = Object.assign({}, C, { groups: cleanGroups });
 const r = await fetch('/api/content', {
 method: 'POST',

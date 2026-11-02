@@ -590,6 +590,7 @@ return `<div class="pcat"><h3>${(g.category || '').replace(/</g, '&lt;')}</h3>${
 let d;
 try { d = await (await fetch('/api/content')).json(); } catch (e) { return; }
 if (!d || typeof d !== 'object') return;
+const B = d.biz || {};
 const T = d.texts || {};
 const esc = s => String(s == null ? '' : s).replace(/</g, '&lt;').replace(/>/g, '&gt;');
 function set(sel, html, attr){
@@ -597,6 +598,39 @@ const el = document.querySelector(sel);
 if (!el) return;
 if (attr) el[attr] = html; else el.innerHTML = html;
 }
+try {
+const phone = B.phone || T.phone || '';
+if (phone) {
+// tel hrefs
+document.querySelectorAll('a[href^="tel:"]').forEach(a => a.setAttribute('href', 'tel:' + phone));
+// phone numbers displayed inside known elements
+const numEls = [];
+document.querySelectorAll('#island b, .cta span, .gbtn span').forEach(e => {
+if (/^\d{2,3}-?\d{7}|\d{9,10}$/.test(String(e.textContent).replace(/ /g, ''))) numEls.push(e);
+});
+numEls.forEach(e => e.textContent = phone.replace(/^(\d{2,3})(\d{7})$/, '$1-$2'));
+}
+if (B.phone || T.phone) document.querySelectorAll('a[href^="tel:0538247102"], a[href="tel:0538247102"]').forEach(a => a.setAttribute('href', 'tel:' + (B.phone || T.phone)));
+} catch (e) {}
+try {
+const waNum = (B.phone || '0538247102').replace(/\D/g, '');
+let waInt = waNum;
+if (waNum.startsWith('0')) waInt = '972' + waNum.slice(1);
+const waUrl = 'https://wa.me/' + waInt + '?text=' + encodeURIComponent(B.wa_text || '');
+document.querySelectorAll('a[href*="wa.me"]').forEach(a => a.setAttribute('href', waUrl));
+} catch (e) {}
+try {
+const socials = [ ['ig1', '.socials .sicon[href*="instagram"]:first-of-type'],
+];
+const ig = document.querySelectorAll('a[href*="instagram.com"]');
+if (B.ig1 && ig[0]) ig[0].href = B.ig1;
+if (B.ig2 && ig[1]) ig[1].href = B.ig2; else if (ig[1] && !B.ig2) ig[1].style.display = 'none';
+if (B.ig2 && ig[1]) ig[1].style.display = '';
+const fb = document.querySelectorAll('a[href*="facebook.com"]');
+if (B.fb && fb[0]) fb[0].href = B.fb; else if (fb[0] && !B.fb) fb[0].style.display = 'none';
+if (B.fb && fb[0]) fb[0].style.display = '';
+} catch (e) {}
+try { if (B.waze) { const w = document.querySelector('.wbtn'); if (w) w.href = B.waze; } } catch (e) {}
 try {
 if (T.hero_kicker) set('#s1 .kick', esc(T.hero_kicker));
 if (T.hero_sub_bold || T.hero_sub_rest) set('#s1 .sub', '<b>' + esc(T.hero_sub_bold || '') + '</b>' + esc(T.hero_sub_rest || ''));
@@ -612,7 +646,7 @@ if (T.final_kicker) set('#s5 .kick', esc(T.final_kicker));
 if (T.final_title) set('#s5 h2', esc(T.final_title));
 if (T.final_ord) set('#s5 .ord', esc(T.final_ord));
 if (T.address) set('address', esc(T.address));
-if (T.waze_label) set('.wbtn span', esc(T.waze_label));
+if (B.waze_label) set('.wbtn span', esc(B.waze_label));
 if (T.footer_left) set('footer div:first-child', esc(T.footer_left));
 if (T.footer_right) set('footer div:last-child', esc(T.footer_right));
 } catch (e) {}
