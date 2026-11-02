@@ -42,7 +42,7 @@ main{position:relative;z-index:5}
 .rl span{display:inline-block;opacity:0;translate:0 .35em;filter:blur(8px);transition:opacity .9s ease,translate .9s cubic-bezier(.2,.7,.2,1),filter .9s ease}
 .rl.in span{opacity:1;translate:0 0;filter:blur(0)}
 .rl .w{display:inline-block;white-space:nowrap}
-.logostage{position:relative;width:clamp(280px,88vw,520px);margin:6px auto 2px;aspect-ratio:1.15;display:grid;place-items:center}
+.logostage{position:relative;width:clamp(320px,96vw,560px);margin:4px auto 0;aspect-ratio:1.15;display:grid;place-items:center}
 .hero-logo{width:97%;height:auto;display:block;position:relative;z-index:2;filter:drop-shadow(0 20px 60px rgba(210,171,85,.5));animation:logoIn 1.6s cubic-bezier(.2,.8,.2,1) .35s both}
 @keyframes logoIn{from{opacity:0;transform:scale(.86) translateY(16px)}to{opacity:1;transform:none}}
 .halo{position:absolute;inset:-9%;border-radius:50%;background:radial-gradient(circle, rgba(232,207,148,.34), rgba(210,171,85,.1) 45%, transparent 70%);filter:blur(20px);animation:haloPulse 3.6s ease-in-out infinite;z-index:1}
@@ -129,18 +129,7 @@ footer{position:relative;z-index:5;padding:30px 6vw 46px;display:flex;justify-co
   background:linear-gradient(120deg, rgba(255,255,255,.13), transparent 32%, transparent 70%, rgba(255,255,255,.07));
   mix-blend-mode:screen}
 /* dynamic-island floating header */
-#island{position:fixed; top:14px; inset-inline-start:50%; translate:50% 0; z-index:30;
-  display:flex; align-items:center; gap:14px; padding:9px 16px; border-radius:999px;
-  -webkit-backdrop-filter:blur(30px) saturate(190%); backdrop-filter:blur(30px) saturate(190%);
-  background:linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
-  border:1px solid rgba(255,255,255,.15);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.2), 0 18px 50px rgba(0,0,0,.5);
-  text-decoration:none; color:var(--ink); font-size:14px; letter-spacing:.16em}
-#island .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold);
-  animation:pulse 2.4s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
-#island b{color:var(--gold-soft);font-weight:400;direction:ltr}
-#island:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.28), 0 22px 70px rgba(210,171,85,.28)}
 /* glass CTA */
 .cta, .gbtn{
   -webkit-backdrop-filter:blur(24px) saturate(190%); backdrop-filter:blur(24px) saturate(190%);
@@ -168,7 +157,6 @@ footer{position:relative;z-index:5;padding:30px 6vw 46px;display:flex;justify-co
   box-shadow:inset 0 1px 0 rgba(255,255,255,.16), 0 20px 55px rgba(0,0,0,.35)}
 .giant .r{background:linear-gradient(94deg, #d2ab55 0%, #f6e8c2 22%, #ffe9b8 30%, #d2ab55 46%, #b8903f 78%);background-size:260% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 7s ease-in-out infinite;text-shadow:0 0 26px rgba(210,171,85,.12)}
 @keyframes shine{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-#island .island-logo{filter:drop-shadow(0 0 6px rgba(210,171,85,.35));animation:logoPulse 3.2s ease-in-out infinite}
 @keyframes logoPulse{0%,100%{filter:drop-shadow(0 0 4px rgba(210,171,85,.28))}50%{filter:drop-shadow(0 0 12px rgba(232,207,148,.6))}}
 .srow:hover .sname,.prow:hover .pval{text-shadow:0 0 18px rgba(232,207,148,.5)}
 .pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px 34px;margin-top:40px}
@@ -208,7 +196,6 @@ footer{position:relative;z-index:5;padding:30px 6vw 46px;display:flex;justify-co
 <div id="vign"></div>
 <div id="grain"></div>
 <div class="bar"></div><div class="bar b"></div>
-<a id="island" href="tel:0538247102" aria-label="Kati Sara — קביעת תור"><img class="island-logo" src="legacy/logo.svg" alt="" width="34" height="34" onerror="this.style.display='none'" /><span>K·S</span> · <b>0538247102</b></a>
 <main>
   <section class="panel" id="s1">
     <div>
@@ -605,7 +592,7 @@ if (phone) {
 document.querySelectorAll('a[href^="tel:"]').forEach(a => a.setAttribute('href', 'tel:' + phone));
 // phone numbers displayed inside known elements
 const numEls = [];
-document.querySelectorAll('#island b, .cta span, .gbtn span').forEach(e => {
+document.querySelectorAll('.cta span, .gbtn span').forEach(e => {
 if (/^\d{2,3}-?\d{7}|\d{9,10}$/.test(String(e.textContent).replace(/ /g, ''))) numEls.push(e);
 });
 numEls.forEach(e => e.textContent = phone.replace(/^(\d{2,3})(\d{7})$/, '$1-$2'));
