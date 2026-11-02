@@ -161,6 +161,11 @@ footer{position:relative;z-index:5;padding:30px 6vw 46px;display:flex;justify-co
   -webkit-backdrop-filter:blur(22px) saturate(190%); backdrop-filter:blur(22px) saturate(190%);
   border:1px solid rgba(255,255,255,.13); border-radius:22px;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.16), 0 20px 55px rgba(0,0,0,.35)}
+.giant .r{background:linear-gradient(94deg, #d2ab55 0%, #f6e8c2 22%, #ffe9b8 30%, #d2ab55 46%, #b8903f 78%);background-size:260% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 7s ease-in-out infinite;text-shadow:0 0 26px rgba(210,171,85,.12)}
+@keyframes shine{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+#island .island-logo{filter:drop-shadow(0 0 6px rgba(210,171,85,.35));animation:logoPulse 3.2s ease-in-out infinite}
+@keyframes logoPulse{0%,100%{filter:drop-shadow(0 0 4px rgba(210,171,85,.28))}50%{filter:drop-shadow(0 0 12px rgba(232,207,148,.6))}}
+.srow:hover .sname,.prow:hover .pval{text-shadow:0 0 18px rgba(232,207,148,.5)}
 .pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px 34px;margin-top:40px}
 .pcat{background:linear-gradient(135deg, rgba(255,255,255,.07), rgba(255,255,255,.02));-webkit-backdrop-filter:blur(24px) saturate(190%);backdrop-filter:blur(24px) saturate(190%);border:1px solid rgba(255,255,255,.13);border-radius:26px;padding:26px 26px 12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.18), 0 18px 60px rgba(0,0,0,.4)}
 .pcat h3{font-family:var(--serif);font-size:21px;color:var(--gold-soft);margin-bottom:10px;letter-spacing:.06em}
@@ -194,7 +199,7 @@ footer{position:relative;z-index:5;padding:30px 6vw 46px;display:flex;justify-co
 <div id="grain"></div>
 <div class="bar"></div><div class="bar b"></div>
 <div id="cut">סצנה <b>01</b> מתוך 05</div>
-<a id="island" href="tel:0538247102" aria-label="Kati Sara — קביעת תור"><img class="island-logo" src="legacy/logo.svg" alt="Kati Sara" /><span>K·S</span> · <b>0538247102</b></a>
+<a id="island" href="tel:0538247102" aria-label="Kati Sara — קביעת תור"><img class="island-logo" src="legacy/logo.svg" alt="" width="30" height="30" onerror="this.style.display='none'" /><span>K·S</span> · <b>0538247102</b></a>
 <main>
   <section class="panel" id="s1">
     <div>
@@ -289,6 +294,13 @@ footer{position:relative;z-index:5;padding:30px 6vw 46px;display:flex;justify-co
 </footer>
 <script type="module">
 import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+import { EffectComposer } from 'https://unpkg.com/three@0.160.0/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'https://unpkg.com/three@0.160.0/examples/jsm/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'https://unpkg.com/three@0.160.0/examples/jsm/postprocessing/UnrealBloomPass.js';
+import { ShaderPass } from 'https://unpkg.com/three@0.160.0/examples/jsm/postprocessing/ShaderPass.js';
+import { OutputPass } from 'https://unpkg.com/three@0.160.0/examples/jsm/postprocessing/OutputPass.js';
+import { VignetteShader } from 'https://unpkg.com/three@0.160.0/examples/jsm/shaders/VignetteShader.js';
+import Lenis from 'https://unpkg.com/lenis@1.3.27/dist/lenis.mjs';
 
 const canvas = document.getElementById('gl');
 const IS_MOB = innerWidth < 820;
@@ -312,6 +324,7 @@ if (!renderer) {
 
   function resize(){
     renderer.setSize(innerWidth, innerHeight);
+    composer.setSize(innerWidth, innerHeight);
     camera.aspect = innerWidth/innerHeight;
     camera.updateProjectionMatrix();
     uni.uRes.value.set(innerWidth, innerHeight);
@@ -354,6 +367,36 @@ if (!renderer) {
   );
   silk.frustumCulled = false;
   scene.add(silk);
+
+  /* cinema postprocessing: bloom + chromatic aberration + vignette */
+  const composer = new EffectComposer(renderer);
+  composer.addPass(new RenderPass(scene, camera));
+  const bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), IS_MOB ? .3 : .55, .5, .5);
+  composer.addPass(bloom);
+  const chromaShader = {
+uniforms: { tDiffuse: { value: null }, uChroma: { value: IS_MOB ? .0009 : .0012 } },
+vertexShader: `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.); }`,
+fragmentShader: `uniform sampler2D tDiffuse; uniform float uChroma; varying vec2 vUv;
+void main(){
+vec2 dir = vUv - .5;
+vec3 c;
+c.r = texture2D(tDiffuse, vUv + dir * uChroma).r;
+c.g = texture2D(tDiffuse, vUv).g;
+c.b = texture2D(tDiffuse, vUv - dir * uChroma).b;
+gl_FragColor = vec4(c, 1.);
+}`
+};
+  const chromaPass = new ShaderPass(chromaShader);
+  composer.addPass(chromaPass);
+  const vigPass = new ShaderPass(VignetteShader);
+  vigPass.uniforms.offset.value = .92;
+  vigPass.uniforms.darkness.value = 1.15;
+  composer.addPass(vigPass);
+  composer.addPass(new OutputPass());
+
+  /* buttery smooth scroll */
+  const lenis = new Lenis({ lerp: .09, smoothWheel: true, touchMultiplier: 1.4 });
+  let lastScroll01 = 0;
 
   /* gold lash-crest particles */
   function hashf(n){ const x = Math.sin(n)*43758.5453; return x - Math.floor(x); }
@@ -471,16 +514,27 @@ if (!renderer) {
     const dY = IS_MOB ? Math.cos(el*.15)*.1 : Math.cos(el*.13)*.06;
     camera.position.x += ((mx + dX)*2.2 - camera.position.x)*.045;
     camera.position.y += ((-my + dY)*1.4 - camera.position.y)*.045;
+    camera.position.z = 30 - scroll01*5;
     camera.lookAt(0, 8.5 - scroll01*10, 0);
+    camera.rotation.z += Math.sin(scroll01*6.28318)*.035;
+    const vel = Math.abs(scroll01 - lastScroll01);
+    lastScroll01 += (scroll01 - lastScroll01) * .2;
+    chromaPass.uniforms.uChroma.value += ((IS_MOB ? .0008 : .0012) + vel*.02 - chromaPass.uniforms.uChroma.value) * .1;
+    lenis.raf(performance.now());
     if (IS_MOB) {
       pu.uMouse.value.set(Math.sin(el*.16)*.14, Math.cos(el*.13)*.1);
       uni.uMouse.value.set(.5 + Math.sin(el*.16)*.07, .5 + Math.cos(el*.13)*.05);
     }
-    renderer.render(scene, camera);
+    composer.render();
     requestAnimationFrame(tick);
   }
   onScroll();
   tick();
+} else {
+/* fallback: buttery scroll even without WebGL */
+const lenis = new Lenis({ lerp: .09, smoothWheel: true });
+function rafLoop(time){ lenis.raf(time); requestAnimationFrame(rafLoop); }
+requestAnimationFrame(rafLoop);
 }
 </script>
 <noscript><style>#gl,#grain,#cut{display:none} body{background:radial-gradient(120% 100% at 68% 18%, #33281a 0%, #0e0b09 70%)}</style></noscript>
