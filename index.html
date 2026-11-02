@@ -567,6 +567,25 @@ function rafLoop(time){ lenis.raf(time); requestAnimationFrame(rafLoop); }
 requestAnimationFrame(rafLoop);
 }).catch(() => {});
 </script>
+<script>
+/* price grid reads the admin-managed data (KV) and re-renders when present */
+(async () => {
+try {
+const r = await fetch('/api/prices');
+const d = await r.json();
+if (!d || !Array.isArray(d.groups) || d.groups.length === 0) return;
+const grid = document.querySelector('.pgrid');
+if (!grid) return;
+grid.innerHTML = d.groups.map(g => {
+const rows = (g.items || []).map(it => {
+const val = it.to ? `<span class="pm">מ</span> ${it.from} <span class="pto">עד</span> ${it.to}` : `<span class="pm">מ</span> ${it.from}`;
+return `<div class="prow"><span class="pname">${(it.name || '').replace(/</g, '&lt;')}</span><span class="pval">${val} <i>₪</i></span></div>`;
+}).join('');
+return `<div class="pcat"><h3>${(g.category || '').replace(/</g, '&lt;')}</h3>${rows}</div>`;
+}).join('');
+} catch (e) { /* fallback: the embedded price list stays */ }
+})();
+</script>
 <noscript><style>#gl,#grain{display:none} body{background:radial-gradient(120% 100% at 68% 18%, #33281a 0%, #0e0b09 70%)}</style></noscript>
 </body>
 </html>
