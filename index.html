@@ -44,6 +44,16 @@ main{position:relative;z-index:5}
 .rl span{display:inline-block;opacity:0;translate:0 .35em;filter:blur(8px);transition:opacity .9s ease,translate .9s cubic-bezier(.2,.7,.2,1),filter .9s ease}
 .rl.in span{opacity:1;translate:0 0;filter:blur(0)}
 .rl .w{display:inline-block;white-space:nowrap}
+.logostage{position:relative;width:clamp(210px,60vw,320px);margin:10px auto 6px;aspect-ratio:1.15;display:grid;place-items:center}
+.hero-logo{width:92%;height:auto;display:block;position:relative;z-index:2;filter:drop-shadow(0 20px 60px rgba(210,171,85,.5));animation:logoIn 1.6s cubic-bezier(.2,.8,.2,1) .35s both}
+@keyframes logoIn{from{opacity:0;transform:scale(.86) translateY(16px)}to{opacity:1;transform:none}}
+.halo{position:absolute;inset:-16%;border-radius:50%;background:radial-gradient(circle, rgba(232,207,148,.34), rgba(210,171,85,.1) 45%, transparent 70%);filter:blur(20px);animation:haloPulse 3.6s ease-in-out infinite;z-index:1}
+@keyframes haloPulse{0%,100%{transform:scale(.9);opacity:.7}50%{transform:scale(1.07);opacity:1}}
+.ring{position:absolute;inset:-7%;border-radius:50%;border:1px solid rgba(232,207,148,.55);border-top-color:transparent;animation:spin 9s linear infinite;z-index:3}
+.ring.r2{inset:-13%;border-style:dashed;border-color:rgba(210,171,85,.4);border-bottom-color:transparent;animation:spinR 15s linear infinite;opacity:.6}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes spinR{to{transform:rotate(-360deg)}}
+.brandline{font-family:var(--serif);font-weight:700;font-size:clamp(17px,4.6vw,26px);letter-spacing:.5em;text-indent:.5em;color:var(--gold-soft);text-align:center;margin-top:6px}
 .kick{font-size:11px;letter-spacing:.55em;color:var(--gold);text-transform:uppercase;font-weight:300}
 h1,h2{font-family:var(--serif);font-weight:900}
 .giant{font-size:clamp(64px,15.5vw,200px);line-height:.9}
@@ -210,8 +220,12 @@ footer{position:relative;z-index:5;padding:30px 6vw 46px;display:flex;justify-co
         <a class="sicon wa" href="https://wa.me/972538247102?text=%D7%94%D7%99%D7%99%20%D7%A7%D7%98%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%AA%D7%95%D7%A8" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12 3.5a8.5 8.5 0 0 0-7.2 13L4 20.5l4.2-1.1A8.5 8.5 0 1 0 12 3.5z"/><path d="M9.3 8.8c.3-.6.7-.6 1-.6h.7c.3 0 .5.1.7.4l.9 2c.1.3.1.5-.1.7l-.6.7c-.2.2-.2.4-.1.6.5.9 1.6 1.9 2.5 2.3.3.1.5.1.7-.1l.7-.7c.2-.2.4-.2.7-.1l2 .9c.3.1.4.4.4.6 0 1.2-1 2.2-2.2 2.2-3.9-.3-6.1-2.4-7.6-5.1-.8-1.4-1.2-2.6-1-3.3z"/></svg></a>
       </div>
       <div class="kick rl">סטודיו לאיפור קבוע · אשקלון</div>
-      <img class="hero-logo" src="legacy/logo.svg" alt="" width="120" height="90" onerror="this.style.display='none'" style="display:block;width:clamp(96px,24vw,140px);height:auto;margin:14px auto 4px;opacity:.95;filter:drop-shadow(0 8px 30px rgba(210,171,85,.28))" />
-      <h1 class="giant rl" style="margin-top:10px" dir="ltr">KATI <span class="r">SARA</span></h1>
+      <div class="logostage">
+      <div class="halo"></div>
+      <img class="hero-logo" src="legacy/logo.svg" alt="Kati Sara — permanent beauty studio" width="320" height="240" onerror="this.style.display='none'" />
+      <div class="ring"></div><div class="ring r2"></div>
+      </div>
+      <div class="brandline rl" dir="ltr">KATI SARA</div>
       <p class="sub rl" style="transition-delay:.25s"><b>איפור קבוע · מיקרובלדינג גבות · למינציה לריסים · קעקוע קוסמטי.</b> סטודיו באשקלון שעובד לפי עקרון אחד: הפרצוף שלך הוא לא תרגיל — הוא הסרט, ואנחנו הצלמים.</p>
       <a class="cta" href="tel:0538247102">קביעת תור · <span style="font-weight:400">053-8247102</span></a>
     </div>
@@ -508,7 +522,7 @@ gl_FragColor = vec4(c, 1.);
     });
     io.observe(el);
   });
-  [...document.querySelectorAll('.sub, .svc, .gal, .steps, .facts, .deep, .cta, .gbtn, .st, .hero-logo')].forEach(el => {
+  [...document.querySelectorAll('.sub, .svc, .gal, .steps, .facts, .deep, .cta, .gbtn, .st')].forEach(el => {
     el.style.opacity = 0; el.style.translate = '0 30px';
     el.style.transition = 'opacity .9s ease, translate .9s cubic-bezier(.2,.7,.2,1)';
     new IntersectionObserver((es) => {
