@@ -99,15 +99,21 @@ export default {
       const assetUrl = new URL(request.url);
       assetUrl.pathname = '/admin.html';
       const res = await env.ASSETS.fetch(new Request(assetUrl, { method: 'GET' }));
-      return withNoStore(res);
+      return withCache(res, '/admin.html');
     }
     const res = await env.ASSETS.fetch(request);
-    return withNoStore(res);
+    return withCache(res, url.pathname);
   },
 };
 
-function withNoStore(res) {
+function withCache(res, pathname) {
   const h = new Headers(res.headers);
-  h.set('cache-control', 'no-store, must-revalidate');
+  if (pathname.startsWith('/api/')) {
+    h.set('cache-control', 'no-store');
+  } else if (/\.(jpg|jpeg|png|svg|webp|ico|woff2?)$/.test(pathname)) {
+    h.set('cache-control', 'public, max-age=86400');
+  } else {
+    h.set('cache-control', 'no-cache, must-revalidate');
+  }
   return new Response(res.body, { status: res.status, headers: h });
 }
