@@ -1,2 +1,14 @@
 /*
-  Cache-Control: no-store, must-revalidate
+  Cache-Control: no-cache, must-revalidate
+
+/legacy/*
+  Cache-Control: public, max-age=86400
+
+/og.jpg
+  Cache-Control: public, max-age=86400
+
+/favicon.jpg
+  Cache-Control: public, max-age=86400
+
+/api/*
+  Cache-Control: no-store
